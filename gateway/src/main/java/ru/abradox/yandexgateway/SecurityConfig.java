@@ -19,15 +19,16 @@ import reactor.core.publisher.Mono;
 @Configuration
 class SecurityConfig {
 
-//    @Bean
-//    public SecurityWebFilterChain clientSecurityFilterChain(ServerHttpSecurity http) {
-//        return http
-//                //.csrf(ServerHttpSecurity.CsrfSpec::disable)
-//                //.cors(ServerHttpSecurity.CorsSpec::disable)
-//                .authorizeExchange(authorize -> authorize
-//                        .anyExchange().permitAll().and().oauth2Login())
-//                .build();
-//    }
+    @Bean
+    public SecurityWebFilterChain clientSecurityFilterChain(ServerHttpSecurity http) {
+        return http
+                .oauth2Login(Customizer.withDefaults())
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .cors(ServerHttpSecurity.CorsSpec::disable)
+                .authorizeExchange(authorize -> authorize
+                        .anyExchange().authenticated())
+                .build();
+    }
 
 //    @Bean
 //    public SecurityWebFilterChain clientSecurityFilterChain(ServerHttpSecurity http) {
@@ -36,13 +37,13 @@ class SecurityConfig {
 //                .build();
 //    }
 
-    @Bean
-    WebFilter csrfCookieWebFilter() {
-        return (exchange, chain) -> {
-            Mono<CsrfToken> csrfToken = exchange.getAttributeOrDefault(CsrfToken.class.getName(), Mono.empty());
-            return csrfToken.doOnSuccess(token -> {
-            }).then(chain.filter(exchange));
-        };
-    }
+//    @Bean
+//    WebFilter csrfCookieWebFilter() {
+//        return (exchange, chain) -> {
+//            Mono<CsrfToken> csrfToken = exchange.getAttributeOrDefault(CsrfToken.class.getName(), Mono.empty());
+//            return csrfToken.doOnSuccess(token -> {
+//            }).then(chain.filter(exchange));
+//        };
+//    }
 
 }
