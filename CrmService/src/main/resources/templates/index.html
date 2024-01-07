@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Тест</title>
+</head>
+<body>
+<h1>Получить данные пользователя</h1>
+
+
+<button id="submitBtnGet">Напечатать в консоль данные пользователя - GET</button>
+<br>
+<button id="submitBtnPost">Напечатать в консоль данные пользователя - POST</button>
+
+<script>
+    document.getElementById('submitBtnGet').addEventListener('click', function() {
+        fetch('/crm/whoami', {
+            method: 'GET',
+            credentials: "include"
+        })
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+
+<script>
+    document.getElementById('submitBtnPost').addEventListener('click', function() {
+        fetch('/crm/whoami', {
+            method: 'POST',
+            credentials: "include"
+        })
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+
+</body>
+</html>
